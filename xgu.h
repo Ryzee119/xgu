@@ -436,6 +436,14 @@ uint32_t* xgu_set_clip_max(uint32_t* p, float zfar) {
 }
 
 XGU_API
+uint32_t *xgu_set_scissor_rect (uint32_t *p, bool inclusive, uint32_t x, uint32_t y, uint32_t width, uint32_t height) {
+    p = push_command_boolean(p, NV097_SET_WINDOW_CLIP_TYPE, inclusive);
+    p = push_command_parameter(p, NV097_SET_WINDOW_CLIP_HORIZONTAL, ((x + width) << 16) | x);
+    p = push_command_parameter(p, NV097_SET_WINDOW_CLIP_VERTICAL, ((y + height) << 16) | y);
+    return p;
+}
+
+XGU_API
 uint32_t* xgu_set_zstencil_clear_value(uint32_t* p, uint32_t value) {
     return push_command_parameter(p, NV097_SET_ZSTENCIL_CLEAR_VALUE, value);
 }
