@@ -225,6 +225,12 @@ typedef enum {
     XGU_TEXTURE_CONVOLUTION_GAUSSIAN = NV097_SET_TEXTURE_FILTER_CONVOLUTION_KERNEL_GAUSSIAN_3,
 } XguTexConvolution;
 
+typedef enum
+{
+    XGU_TEXTURE_FILTER_NEAREST = NV_PGRAPH_TEXFILTER0_MIN_BOX_LOD0,
+    XGU_TEXTURE_FILTER_LINEAR = NV_PGRAPH_TEXFILTER0_MIN_TENT_LOD0,
+} XguTexFilter;
+
 typedef enum {
     XGU_STENCIL_OP_KEEP = NV097_SET_STENCIL_OP_V_KEEP,
     XGU_STENCIL_OP_ZERO = NV097_SET_STENCIL_OP_V_ZERO,
@@ -1080,7 +1086,7 @@ uint32_t* xgu_set_texture_control1(uint32_t* p, unsigned int texture_index, uint
 }
 
 XGU_API
-uint32_t* xgu_set_texture_filter(uint32_t* p, unsigned int texture_index, uint16_t lod_bias, XguTexConvolution convolution_kernel, uint8_t filter_min, uint8_t filter_mag,
+uint32_t* xgu_set_texture_filter(uint32_t* p, unsigned int texture_index, uint16_t lod_bias, XguTexConvolution convolution_kernel, XguTexFilter filter_min, XguTexFilter filter_mag,
                                  bool r_signed, bool g_signed, bool b_signed, bool a_signed) {
     assert(texture_index < XGU_TEXTURE_COUNT);
     return push_command_parameter(p, NV097_SET_TEXTURE_FILTER + texture_index*64,
